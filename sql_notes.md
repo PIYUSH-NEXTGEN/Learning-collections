@@ -56,5 +56,16 @@ Used to manage transactions in a database.
 - `COMMIT` → Saves changes permanently.
 - `ROLLBACK` → Undoes changes that are not committed.
 
+### Rules - 
+Keywords should be in caps.
+Object name should be in all small letters.
 
+1 CREATE DATABASE campusx
+    or
+CREATE DATABASE IF NOT EXISTS campusx
+
+this will create a new db.
+
+2 DROP DATABASE IF EXISTS campusx
+it will delete the db.
 
