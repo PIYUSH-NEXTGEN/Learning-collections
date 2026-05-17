@@ -60,6 +60,7 @@ Used to manage transactions in a database.
 Keywords should be in caps.
 Object name should be in all small letters.
 
+1 DDL COMMANDS FOR DATABASE
 1 CREATE DATABASE campusx
     or
 CREATE DATABASE IF NOT EXISTS campusx
@@ -68,4 +69,7 @@ this will create a new db.
 
 2 DROP DATABASE IF EXISTS campusx
 it will delete the db.
+
+DDL COMMANDS FOR TABLE
+
 
