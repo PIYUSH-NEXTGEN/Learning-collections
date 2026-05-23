@@ -195,8 +195,11 @@ Here the age column in the users table is defined with a DEFAULT constraint that
 
 ---
 
-
-
+### ALTER TABLE -
+The ALTER TABLE statement is used to modify the structure of an existing table in a database. It allows you to add, delete, or modify columns, as well as add or drop constraints.
+```aiignore
+ALTER TABLE users ADD COLUMN phone VARCHAR(255) NOT NULL
+```
 
 
 
