@@ -200,8 +200,8 @@ The ALTER TABLE statement is used to modify the structure of an existing table i
 ```aiignore
 ALTER TABLE users ADD COLUMN phone VARCHAR(255) NOT NULL
 ```
-
-
+SQL OPERATORS - https://drive.google.com/file/d/13Cu0VUqbENcUX76bx_aoBS0EAtzDPDrE/view
+SQL NOTES PDF - https://github.com/thevkrant/MySQL-Notes
 
 
 
