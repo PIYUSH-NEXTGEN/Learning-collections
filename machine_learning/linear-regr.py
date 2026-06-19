@@ -1,3 +1,7 @@
+'''
+Linear Regression learns the best-fitting straight-line relationship between input features and a continuous numerical target
+by minimizing prediction error using a cost function and gradient descent.
+'''
 import numpy as np
 import  matplotlib.pyplot as plt
 
