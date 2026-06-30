@@ -10,11 +10,11 @@ Linear Regression is one of the simplest and most widely used supervised machine
 
 ---
 
-## The Core Idea — What Is "Regression"?
+## What Is "Regression"?
 
 Imagine you're plotting points on a graph — X-axis is "years of experience", Y-axis is "salary". After plotting 50 employees, you see the points form a rough diagonal pattern. Linear Regression draws the **single best straight line** through all those points.
 
-Once you have this line, you can predict salary for any new experience value — even ones you've never seen before.
+Once you have this line, you can predict salary for any new experience value.
 
 ---
 
@@ -50,8 +50,6 @@ Predicted salary = ₹50,000 ✅
 ## The Goal — Finding the Best $w$ and $b$
 
 The model doesn't know $w$ and $b$ at the start. It **learns** them from the training data. The goal is to find values of $w$ and $b$ that make predictions as close as possible to the actual values.
-
-Think of it like adjusting a volume knob ($w$) and a base volume ($b$) until the music sounds right.
 
 ---
 
