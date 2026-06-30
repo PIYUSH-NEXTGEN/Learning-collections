@@ -16,7 +16,6 @@ Imagine you need to multiply 1,000 numbers by 2.
 - **Loop approach:** Pick up number 1, multiply by 2, put it down. Pick up number 2, multiply by 2, put it down. Repeat 1,000 times.
 - **Vectorized approach:** Put all 1,000 numbers on a conveyor belt. One machine processes all of them simultaneously. Done in one pass.
 
-The math is identical. The speed is completely different.
 
 ---
 
@@ -30,7 +29,7 @@ In ML, you're almost never working with a single data point. You have:
 
 At that scale, the difference between a loop and a vectorized operation is the difference between **minutes and hours**, or **hours and days**.
 
-### Example — Dot Product
+### Example Dot Product
 
 A dot product multiplies two vectors element-wise and sums the results. This is the core operation behind nearly every ML algorithm.
 
@@ -57,13 +56,12 @@ for i in range(len(w)):
 result = np.dot(w, x)
 ```
 
-One line. No loop. NumPy handles it internally using optimised low-level code — and it runs orders of magnitude faster.
+One line. No loop. NumPy handles it internally using optimised low-level code it runs orders of magnitude faster.
 
 ---
 
-## Vectors, Matrices, and Why They're Used
+## Vectors, Matrices
 
-Before going deeper, it helps to understand what these structures actually are.
 
 ### Scalar — A Single Number
 
@@ -122,7 +120,7 @@ Two nested loops. Slow.
 predictions = np.dot(X, w) + b
 ```
 
-One line. NumPy multiplies the entire matrix $X$ by the weight vector $w$ and adds bias $b$ — for all $m$ examples and $n$ features simultaneously.
+One line. NumPy multiplies the entire matrix $X$ by the weight vector $w$ and adds bias $b$ for all $m$ examples and $n$ features simultaneously.
 
 Mathematically:
 
@@ -189,7 +187,7 @@ errors = predictions - y                   # shape: (m,)
 gradients = np.dot(X.T, errors) / m       # shape: (n,)
 ```
 
-The matrix transpose $X^T$ and a single dot product replaces the entire double loop. This is dramatically faster — and easier to read.
+The matrix transpose $X^T$ and a single dot product replaces the entire double loop. This is dramatically faster and easier to read.
 
 ---
 
@@ -223,7 +221,7 @@ This is why vectorization is not just a convenience — it's what makes deep lea
 
 ---
 
-## Speed Comparison — Concrete Example
+## Speed Comparison  Concrete Example
 
 Multiplying two arrays of 1,000,000 numbers:
 
