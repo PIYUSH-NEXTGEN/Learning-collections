@@ -1,6 +1,6 @@
-# Cost Function in Machine Learning — In-Depth Study Notes
+# Cost Function in Machine Learning 
 
-A **cost function** is a mathematical function that measures how wrong a machine learning model's predictions are across the entire training dataset. It converts all the individual prediction errors into a **single number** — a report card for the model.
+A **cost function** is a mathematical function that measures how wrong a machine learning model's predictions are across the entire training dataset. It converts all the individual prediction errors into a **single number**.
 
 - Low Cost → Good predictions (model is learning well)
 - High Cost → Poor predictions (model needs improvement)
@@ -11,7 +11,7 @@ The entire goal of training is to **minimise this number**.
 
 ## Why Do We Need a Cost Function?
 
-When a model makes predictions, it needs a feedback mechanism — some way to know:
+When a model makes predictions, it needs a feedback mechanism :
 
 - *How far off were my predictions?*
 - *Am I getting better or worse after each update?*
@@ -25,7 +25,7 @@ Think of a student learning archery. Each arrow lands somewhere on the target. T
 
 ---
 
-## Loss Function vs Cost Function — Know the Difference
+## Loss Function vs Cost Function 
 
 These two terms are often confused. Here's the exact distinction:
 
@@ -153,7 +153,7 @@ Each iteration, the model asks: *"Which direction should I nudge $w$ and $b$ to 
 
 ---
 
-## Cost Function and Gradient Descent — How They Work Together
+## Cost Function and Gradient Descent 
 
 The cost function and Gradient Descent are two halves of the same learning process:
 
