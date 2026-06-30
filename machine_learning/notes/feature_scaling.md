@@ -19,7 +19,7 @@ These features live on wildly different scales. Without scaling, this causes ser
 
 ### Problem 1 — Gradient Descent Becomes Inefficient
 
-Gradient Descent updates weights based on gradients. When features have very different scales, the cost function becomes elongated and uneven — like an oval bowl instead of a round one.
+Gradient Descent updates weights based on gradients. When features have very different scales, the cost function becomes uneven.
 
 ```
 Without Scaling:             With Scaling:
@@ -92,7 +92,7 @@ Where:
 
 **Use when:** Data has outliers, or you don't know the natural bounds. Works well for most ML algorithms.
 
-**Strength:** Outliers don't destroy the scaling — they just end up with high z-scores.
+**Strength:** Outliers don't destroy the scaling they just end up with high z-scores.
 
 ---
 
@@ -149,12 +149,6 @@ Not every algorithm is affected by feature scale.
 | Naive Bayes | Works with probabilities, not distances |
 
 ---
-
-## A Critical Rule — Fit on Train, Transform on Both
-
-This is one of the most common mistakes beginners make.
-
-You must **only compute** the scaling parameters (min, max, mean, std) **from the training data**, then apply those same parameters to the test data.
 
 ```
 ✅ Correct:
