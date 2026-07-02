@@ -20,9 +20,9 @@ Once you have this line, you can predict salary for any new experience value.
 
 ## The Linear Regression Equation
 
-$$
+$
 \hat{y} = wx + b
-$$
+$
 
 | Symbol | Name | Meaning |
 |--------|------|---------|
