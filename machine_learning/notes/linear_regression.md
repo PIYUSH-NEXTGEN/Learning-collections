@@ -12,7 +12,7 @@ Linear Regression is one of the simplest and most widely used supervised machine
 
 ## What Is "Regression"?
 
-Imagine you're plotting points on a graph — X-axis is "years of experience", Y-axis is "salary". After plotting 50 employees, you see the points form a rough diagonal pattern. Linear Regression draws the **single best straight line** through all those points.
+Imagine you're plotting points on a graph  X-axis is "years of experience", Y-axis is "salary". After plotting 50 employees, you see the points form a rough diagonal pattern. Linear Regression draws the **single best straight line** through all those points.
 
 Once you have this line, you can predict salary for any new experience value.
 
@@ -20,9 +20,9 @@ Once you have this line, you can predict salary for any new experience value.
 
 ## The Linear Regression Equation
 
-$
+$$
 \hat{y} = wx + b
-$
+$$
 
 | Symbol | Name | Meaning |
 |--------|------|---------|
