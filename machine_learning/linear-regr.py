@@ -32,7 +32,7 @@ import  matplotlib.pyplot as plt
 
 # with scikit learn
 from sklearn.linear_model import LinearRegression # importing the linear regression model from sklearn
-
+from sklearn.metrics import mean_squared_error
 
 x = np.array([1, 2, 3, 4, 5]).reshape(-1, 1) # Hours studied (input feature X)
 y = np.array([18, 25, 36, 48, 39])           # Marks obtained (target y
@@ -56,6 +56,9 @@ for hour, pred in zip(new_x, predictions):
 print("\nTraining Data Comparison:")
 training_predictions = model.predict(x)          # Predict marks for the original training data
 
+cost = mean_squared_error(y,training_predictions)
+print(f"\nCost: {cost:.2f}\n")
+
 for hour, actual, pred in zip(x, y, training_predictions):
     print(
         f"Hours = {hour[0]} | "
@@ -63,16 +66,14 @@ for hour, actual, pred in zip(x, y, training_predictions):
         f"Predicted Marks = {pred:.2f}"
     )
 
-plt.scatter(x, y, color="red", label="Training Data")  # Plot the original training data
+plt.scatter(x, y, color="red", label="Training Data") # Plot the original training data
+x_line = np.arange(1, 9).reshape(-1, 1)               # Create more x values so the regression line extends further
 
-# Create more x values so the regression line extends further
-x_line = np.arange(1, 9).reshape(-1, 1)
-
-plt.plot(x_line, model.predict(x_line), # Plot the regression line
+plt.plot(x_line, model.predict(x_line),         # Plot the regression line
          color="blue",
          label="Regression Line")
 
-plt.scatter(new_x, predictions,               # Plot the predicted points
+plt.scatter(new_x, predictions,                        # Plot the predicted points
             color="green",
             marker="x",
             s=100,
@@ -82,4 +83,4 @@ plt.xlabel("Hours Studied")
 plt.ylabel("Marks Obtained")
 plt.title("Linear Regression using Scikit-learn")
 plt.legend()
-plt.show()
+# plt.show()
