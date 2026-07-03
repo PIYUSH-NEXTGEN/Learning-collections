@@ -154,12 +154,18 @@ Where:
 Suppose:
 - Current $w = 2.0$, $b = 1.0$
 - Learning rate $\alpha = 0.1$
-- After computing gradients: $\frac{\partial J}{\partial w} = 0.5$, $\frac{\partial J}{\partial b} = 0.3$
+- After computing gradients: 
+
+$$
+\frac{\partial J}{\partial w} = 0.5, \frac{\partial J}{\partial b} = 0.3 
+$$
 
 Updated values:
+
 $$
 w = 2.0 - 0.1 \times 0.5 = 1.95
 $$
+
 $$
 b = 1.0 - 0.1 \times 0.3 = 0.97
 $$
