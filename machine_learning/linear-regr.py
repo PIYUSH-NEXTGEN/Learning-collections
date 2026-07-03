@@ -32,10 +32,10 @@ import  matplotlib.pyplot as plt
 
 # with scikit learn
 from sklearn.linear_model import LinearRegression # importing the linear regression model from sklearn
-from sklearn.metrics import mean_squared_error
+from sklearn.metrics import mean_squared_error    # importing the mean squared error function from sklearn
 
 x = np.array([1, 2, 3, 4, 5]).reshape(-1, 1) # Hours studied (input feature X)
-y = np.array([18, 25, 36, 48, 39])           # Marks obtained (target y
+y = np.array([18, 25, 36, 48, 39])           # Marks obtained (target y)
 
 model = LinearRegression()                   # Create an object of the LinearRegression class
 model.fit(x, y)                              # Train the model using the training data
