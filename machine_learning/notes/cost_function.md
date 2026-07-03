@@ -91,7 +91,7 @@ This is one of the most important design decisions in the cost function. Here's 
 
 ### Problem: Errors Can Cancel Out
 
-```
+
 Prediction A: 310  →  Error = +10
 Prediction B: 290  →  Error = -10
 
