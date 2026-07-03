@@ -102,26 +102,20 @@ Sum of errors = 10 + (-10) = 0
 
 Here's a powerful way to visualise what the cost function represents.
 
-The model has two parameters: $w$ (weight) and $b$ (bias). For every possible combination of $w$ and $b$, the cost function produces a value. If you plot this in 3D, you get a **bowl-shaped surface**:
+The model has two parameters: w (weight) and b (bias). For every possible combination of w and b, 
+the cost function produces a value. If you plot this in 3D, you get a bowl-shaped surface:
 
-```
-         Cost J
-           │
-High Cost  │   \         /
-           │    \       /
-           │     \     /
-Low Cost   │      \___/   ← Minimum (best w and b)
-           └──────────────────── w, b values
-```
+- The top of the bowl = high cost = bad model
+- The bottom of the bowl = minimum cost = best possible model
 
-- The **top of the bowl** = high cost = bad model
-- The **bottom of the bowl** = minimum cost = best possible model
-
-The goal of training is to **find the bottom of this bowl**.
+The goal of training is to find the bottom of this bowl.
 
 ### Why Is MSE Bowl-Shaped?
 
-Because MSE is a quadratic function of $w$ and $b$ (it involves squaring). Quadratic functions produce parabolas in 2D and bowls in 3D — and crucially, they have exactly **one global minimum**. This is why Gradient Descent always finds the best solution for Linear Regression.
+Because MSE is a quadratic function of w and b (it involves squaring). 
+Quadratic functions produce parabolas in 2D and bowls in 3D — and crucially, 
+they have exactly one global minimum. 
+This is why Gradient Descent always finds the best solution for Linear Regression.
 
 ---
 
@@ -129,27 +123,7 @@ Because MSE is a quadratic function of $w$ and $b$ (it involves squaring). Quadr
 
 The training cycle uses the cost function at every step:
 
-```
-Initialize w = 0, b = 0
-          ↓
-  ┌───────────────────────────────────┐
-  │  1. Make Predictions: ŷ = wx + b  │
-  │             ↓                     │
-  │  2. Calculate Cost J(w, b)        │
-  │             ↓                     │
-  │  3. Compute Gradient of J         │
-  │      (which direction is downhill?)│
-  │             ↓                     │
-  │  4. Update w and b                │
-  │      (take a step downhill)       │
-  └───────────────────────────────────┘
-          ↓
-  Repeat until cost stops decreasing
-          ↓
-  Minimum cost → Best w and b found
-```
-
-Each iteration, the model asks: *"Which direction should I nudge $w$ and $b$ to reduce the cost?"* The gradient of the cost function answers this question.
+Each iteration, the model asks: "Which direction should I nudge w and b to reduce the cost?"* The gradient of the cost function answers this question.
 
 ---
 
@@ -168,9 +142,9 @@ Neither works without the other. The cost function without Gradient Descent just
 
 Imagine you're trying to find the lowest point in a dark valley:
 
-- The **cost function** is the terrain itself — hills and valleys
+- The **cost function** is the terrain itself  hills and valleys
 - The **gradient** is the slope under your feet at any moment
-- **Gradient Descent** is the strategy: always step in the direction the slope goes down
+- Gradient Descent is the strategy: always step in the direction the slope goes down
 
 ---
 
