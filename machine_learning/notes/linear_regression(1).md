@@ -17,6 +17,7 @@ Imagine you're plotting points on a graph  X-axis is "years of experience", Y-ax
 Once you have this line, you can predict salary for any new experience value.
 
 ---
+<img width="595" height="469" alt="image" src="https://github.com/user-attachments/assets/5e16706f-d713-4ac5-ab32-b0873a3adfa2" />
 
 ## The Linear Regression Equation
 
