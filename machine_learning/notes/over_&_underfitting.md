@@ -48,6 +48,7 @@ Overfitting usually comes from:
 ### Signs of Overfitting
 
 Very low training error. High test error. The gap between them is the red flag.
+<img width="650" height="387" alt="image" src="https://github.com/user-attachments/assets/b32873a6-2b91-4dc7-a528-6c176a7e6f14" />
 
 ---
 
@@ -114,7 +115,7 @@ During training, randomly ignore a fraction of neurons on each pass. This preven
 
 ---
 
-## Regularization — The Idea
+## Regularization 
 
 The core insight behind regularization is simple. Overfitting happens when the model has large weights that react strongly to noise in the training data. If you penalise large weights, the model is forced to find a simpler explanation of the data.
 
