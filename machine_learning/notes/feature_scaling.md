@@ -21,24 +21,11 @@ These features live on wildly different scales. Without scaling, this causes ser
 
 Gradient Descent updates weights based on gradients. When features have very different scales, the cost function becomes uneven.
 
-```
-Without Scaling:             With Scaling:
-
-Cost                         Cost
-  │  ~~~~                      │    (  )
-  │ ~    ~~                    │   (    )
-  │~        ~                  │    (  )
-  └──────────── w              └──────────── w
-
-Gradient Descent zigzags      Gradient Descent goes
-and takes many steps          straight to minimum
-```
-
 The model wastes steps bouncing back and forth instead of moving cleanly toward the minimum. Scaling makes the bowl round, so Gradient Descent converges **faster and more smoothly**.
 
 ### Problem 2 — Large Features Dominate
 
-A feature with values in the thousands naturally produces larger gradients than a feature with values between 0 and 1. The model ends up paying more attention to large-valued features — not because they're more important, but simply because their numbers are bigger.
+A feature with values in the thousands naturally produces larger gradients than a feature with values between 0 and 1. The model ends up paying more attention to large-valued features  not because they're more important, but simply because their numbers are bigger.
 
 **Example:** House size (500–5000) will overshadow number of rooms (1–10), even if rooms matter more for the price.
 
