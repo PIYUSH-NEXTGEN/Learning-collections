@@ -42,19 +42,22 @@ import numpy as np
 
 
 # WITH TENSORFLOW
-import tensorflow as tf
 
+# A Sequential model means layers are added one after another.
 from tensorflow.keras.models import Sequential
+
+# Dense = Fully Connected Layer, Every neuron connects to every neuron in the previous layer.
 from tensorflow.keras.layers import Dense
 
-
+# Column 1 = Hours Studied
+# Column 2 = Hours Slept
 X = np.array([
-    [5,8],
-    [2,5],
-    [8,9],
-    [1,3],
-    [6,8],
-    [3,4]
+    [5, 8],
+    [2, 5],
+    [8, 9],
+    [1, 3],
+    [6, 8],
+    [3, 4]
 ])
 
 y = np.array([
@@ -66,19 +69,52 @@ y = np.array([
     0
 ])
 
+# Creates an empty Sequential model. Layers will be added one by one.
 model = Sequential()
 
-model.add(Dense(units=3, activation='sigmoid',input_shape=(2,)))
-model.add(Dense(units=1, activation='sigmoid'))
+# Dense Layer
+# units = 3 -> Create 3 neurons in this hidden layer.
+# activation = 'sigmoid' -> Apply the sigmoid activation function to each neuron.
+# input_shape = (2,) -> Each training example has 2 input features
+model.add(
+    Dense(
+        units=3,
+        activation='sigmoid',
+        input_shape=(2,)
+    )
+)
+
+# Create the output layer.
+# units = 1 -> One neuron because we are predicting one value (Pass or Fail).
+# activation = 'sigmoid' -> Output will be between 0 and 1 (probability).
+model.add(
+    Dense(
+        units=1,
+        activation='sigmoid'
+    )
+)
+
 model.summary()
 
-model.compile(optimizer='adam',loss='binary_crossentropy',metrics=['accuracy'])
-model.fit(X, y, epochs=100)
+# optimizer='adam'  -> Algorithm used to update weights and biases.
+# loss='binary_crossentropy' -> Cost function used for binary classification.
+# metrics=['accuracy'] -> Displays accuracy after every epoch.
+model.compile(
+    optimizer='adam',
+    loss='binary_crossentropy',
+    metrics=['accuracy']
+)
 
-new_student = np.array([[7,9]])
+# epochs=100 means the entire dataset is used 100 times for training.
+model.fit(
+    X,
+    y,
+    epochs=100
+)
+
+new_student = np.array([[1, 3]])
 prediction = model.predict(new_student)
 print((prediction > 0.5).astype(int))
-
 
 
 
