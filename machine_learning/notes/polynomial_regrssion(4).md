@@ -119,16 +119,6 @@ This is the most important thing to understand about polynomial regression.
 
 With a high enough degree, the model can fit the training data almost perfectly. But it starts memorising noise — tiny random fluctuations in the data — rather than learning the actual underlying pattern.
 
-```
-Degree 1 (underfit)       Degree 3 (good fit)       Degree 15 (overfit)
-
-  *   *                     *   *                      * * *
-*       *                 *       *                  *       *
-          *            ___           ___             ~~~~~~~~~~~~
-            *        /                  \          /~            ~\
-              * *  /                      \  * * /                 \~~~
-```
-
 **Underfitting** (degree too low): The curve is too simple. It misses the real pattern. High error on both training and new data.
 
 **Good fit** (degree just right): The curve follows the real pattern. Low error on training data and reasonable error on new data.
