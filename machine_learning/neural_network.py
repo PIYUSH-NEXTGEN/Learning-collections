@@ -112,7 +112,7 @@ model.fit(
     epochs=100
 )
 
-new_student = np.array([[1, 3]])
+new_student = np.array([[1, 3 ]])
 prediction = model.predict(new_student)
 print((prediction > 0.5).astype(int))
 
