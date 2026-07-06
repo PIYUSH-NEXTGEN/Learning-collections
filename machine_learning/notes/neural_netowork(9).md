@@ -193,7 +193,26 @@ If the model is classifying images into cat, dog, and bird, softmax might output
 ## How a Neural Network Works - Forward Propagation
 
 Forward propagation is the process of computing a prediction by passing the input through every layer one at a time from left to right.
+Forward propagation is simply:
 
+Taking the input, passing it through every layer of the neural network, and producing the final prediction.
+
+Nothing is learned here. No weights are updated. No gradient descent happens.
+
+It is only:
+```
+Input
+   ↓
+Multiply by weights
+   ↓
+Add bias
+   ↓
+Activation Function
+   ↓
+Repeat for every layer
+   ↓
+Prediction
+```
 ### Notation
 
 For a network with multiple layers, use superscripts in square brackets to denote the layer:
