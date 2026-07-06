@@ -207,17 +207,21 @@ For a network with multiple layers, use superscripts in square brackets to denot
 For a 3-layer network (2 hidden layers, 1 output layer):
 
 **Layer 1:**
+
 $$
 Z^{[1]} = W^{[1]} X + b^{[1]}
 $$
+
 $$
 A^{[1]} = g^{[1]}(Z^{[1]})
 $$
 
 **Layer 2:**
+
 $$
 Z^{[2]} = W^{[2]} A^{[1]} + b^{[2]}
 $$
+
 $$
 A^{[2]} = g^{[2]}(Z^{[2]})
 $$
@@ -226,6 +230,7 @@ $$
 $$
 Z^{[3]} = W^{[3]} A^{[2]} + b^{[3]}
 $$
+
 $$
 \hat{Y} = g^{[3]}(Z^{[3]})
 $$
