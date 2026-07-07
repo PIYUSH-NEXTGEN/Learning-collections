@@ -159,6 +159,7 @@ For these reasons, sigmoid is mostly avoided in hidden layers today and reserved
 ---
 
 ## 2. Tanh (Hyperbolic Tangent)
+<img width="894" height="516" alt="image" src="https://github.com/user-attachments/assets/95ff2932-b125-417e-bdd1-3d245f72dab2" />
 
 $$
 \tanh(z) = \frac{e^z - e^{-z}}{e^z + e^{-z}}
@@ -179,6 +180,7 @@ Tanh still suffers from the **vanishing gradient problem** for large positive or
 ---
 
 ## 3. ReLU (Rectified Linear Unit)
+<img width="910" height="387" alt="image" src="https://github.com/user-attachments/assets/d45d975a-bac7-40ac-ac4c-b23ecc4bb7a7" />
 
 $$
 g(z) = \max(0, z)
@@ -209,6 +211,7 @@ ReLU is the default choice for **hidden layers** in most feedforward and convolu
 ---
 
 ## 4. Leaky ReLU
+<img width="900" height="433" alt="image" src="https://github.com/user-attachments/assets/f69ae1a4-1076-405a-9aa5-20f739d7973f" />
 
 $$
 g(z) = \max(0.01z, z)
@@ -223,6 +226,7 @@ Leaky ReLU is a direct fix for the dying ReLU problem. Instead of outputting exa
 Leaky ReLU is used in **hidden layers** as a drop-in replacement for ReLU, especially in situations where dying neurons are observed or suspected.
 
 ### Parametric ReLU (PReLU)
+<img width="607" height="484" alt="image" src="https://github.com/user-attachments/assets/d4a0f769-f881-4bfa-a8e8-058627095292" />
 
 A variation where the slope for negative values is not fixed at 0.01 but is learned during training. This gives the network one more learnable parameter per neuron, allowing it to determine the optimal slope for negative inputs automatically.
 
@@ -235,6 +239,7 @@ Where $\alpha$ is learned, not set manually.
 ---
 
 ## 5. ELU (Exponential Linear Unit)
+<img width="910" height="465" alt="image" src="https://github.com/user-attachments/assets/4105772f-4f3e-4e3d-90cd-c78965c0aad2" />
 
 $$
 g(z) =
@@ -255,6 +260,7 @@ ELU is used in **hidden layers** when you want the benefits of ReLU but with smo
 ---
 
 ## 6. Swish
+<img width="532" height="457" alt="image" src="https://github.com/user-attachments/assets/332725aa-45bd-4ff2-8224-fa963bebde45" />
 
 $$
 g(z) = z \cdot \sigma(z) = \frac{z}{1 + e^{-z}}
@@ -272,6 +278,7 @@ Swish is used in **hidden layers** of very deep networks, notably in EfficientNe
 ---
 
 ## 7. GELU (Gaussian Error Linear Unit)
+<img width="553" height="478" alt="image" src="https://github.com/user-attachments/assets/ad0d21dc-b083-421d-9ab0-41e11899306a" />
 
 $$
 g(z) = z \cdot \Phi(z)
