@@ -126,74 +126,288 @@ Layer         Layer 1        Layer 2        Layer
 Each line represents a weight connection. Every neuron in one layer connects to every neuron in the next layer. This is called a **fully connected** or **dense** layer.
 
 ---
+# Activation Functions
+An activation function is a mathematical function applied to the output of a neuron after computing the weighted sum. It decides whether and how strongly a neuron should "fire"  that is, what value it passes forward to the next layer.
 
-## Activation Functions 
+Without an activation function, every layer in a neural network would just compute a linear transformation of its inputs. A linear transformation of a linear transformation is still just a linear transformation. No matter how many layers you stack, the entire network would behave like a single linear equation  no more powerful than logistic regression. Activation functions break this limitation by introducing **non-linearity**, which is what allows deep networks to learn complex patterns.
 
-If there were no activation functions, each layer would just compute a linear transformation of the previous layer. A linear transformation of a linear transformation is still just a linear transformation. No matter how many layers you stack, the whole network would be equivalent to a single linear model  no better than linear regression.
+There are two broad categories of activation functions. Some are used in hidden layers to help the network learn rich internal representations. Others are used in the output layer to shape the final prediction into the right format for the task.
+<img width="1226" height="604" alt="Screenshot 2026-07-06 215926" src="https://github.com/user-attachments/assets/0dbfb090-3e70-43b5-aadd-7a9405b7218d" />
 
-Activation functions introduce **non-linearity**, which is what allows neural networks to model complex, curved, real-world patterns.
-
-### Sigmoid
+## 1. Sigmoid
 
 $$
 \sigma(z) = \frac{1}{1 + e^{-z}}
 $$
 
-Output range: 0 to 1. Used in the output layer for binary classification. Rarely used in hidden layers anymore because of the vanishing gradient problem (gradients become extremely small for large or small values of $z$, which slows learning in deep networks).
+Output range: 0 to 1
 
-### Tanh (Hyperbolic Tangent)
+The sigmoid takes any real number and squashes it into a value between 0 and 1. When $z$ is a large positive number, the output approaches 1. When $z$ is a large negative number, the output approaches 0. At $z = 0$, the output is exactly 0.5.
+
+### Where It Is Used
+
+The sigmoid is most naturally used in the **output layer for binary classification**, where you want the network to output a probability between 0 and 1. For example, predicting whether an email is spam (1) or not spam (0).
+
+### Problems with Sigmoid in Hidden Layers
+
+**Vanishing gradient:** When $z$ is very large or very small, the sigmoid curve becomes almost flat. The gradient at those regions is nearly zero. During backpropagation, gradients are multiplied layer by layer, so passing near-zero gradients back through many layers causes them to shrink exponentially. By the time they reach the early layers, the update is so small that those layers barely learn anything. This is called the vanishing gradient problem and it makes training deep networks with sigmoid activations very slow.
+
+**Not zero-centred:** Sigmoid outputs are always positive (between 0 and 1), never negative. This can cause gradients during backpropagation to always be the same sign, which leads to inefficient zigzag updates during optimisation.
+
+For these reasons, sigmoid is mostly avoided in hidden layers today and reserved for the output layer of binary classifiers.
+
+---
+
+## 2. Tanh (Hyperbolic Tangent)
 
 $$
 \tanh(z) = \frac{e^z - e^{-z}}{e^z + e^{-z}}
 $$
 
-Output range: -1 to 1. Centred at zero, which makes it better than sigmoid for hidden layers. Still suffers from vanishing gradients for extreme values.
+Output range: -1 to 1
 
-### ReLU (Rectified Linear Unit)
+Tanh is similar to sigmoid in shape but stretched to output values between -1 and 1 instead of 0 and 1. The key improvement is that tanh is **zero-centred** — its output ranges symmetrically around zero. This makes gradients during backpropagation more balanced and generally leads to faster convergence than sigmoid.
+
+### Where It Is Used
+
+Tanh is sometimes used in **hidden layers** as an alternative to ReLU, particularly in recurrent neural networks (RNNs) where the zero-centred property is important. It also appears as the output activation in tasks where predictions should range between -1 and 1.
+
+### Problems with Tanh
+
+Tanh still suffers from the **vanishing gradient problem** for large positive or large negative values of $z$, where the curve flattens out. The gradients at those regions approach zero, slowing down learning in deep networks. It is better than sigmoid in this regard but not fully immune.
+
+---
+
+## 3. ReLU (Rectified Linear Unit)
 
 $$
 g(z) = \max(0, z)
 $$
 
-Output: 0 if $z$ is negative, $z$ if $z$ is positive.
+Output range: 0 to infinity
 
+ReLU is the most widely used activation function in hidden layers today. Its rule is simple: if $z$ is positive, output $z$ unchanged. If $z$ is negative, output 0.
 
-ReLU is the most widely used activation function in hidden layers today. It is simple, computationally cheap, and does not suffer from vanishing gradients for positive values. The main issue is "dying ReLU" where neurons can get stuck outputting zero if their weights push $z$ negative for all inputs.
+### Why ReLU Became the Default
 
-### Leaky ReLU
+**No vanishing gradient for positive values.** For any positive $z$, the gradient of ReLU is exactly 1. This means gradients flow back through the network without shrinking, allowing deep networks to train effectively.
+
+**Computationally cheap.** ReLU is just a comparison and a clamp. No exponentials, no divisions. It is extremely fast to compute, which matters when you have millions of neurons.
+
+**Sparsity.** For any neuron where $z$ is negative, ReLU outputs exactly 0. In practice, roughly half the neurons in a ReLU network output zero at any given time. This sparsity makes the network more efficient and can act as a mild regularizer.
+
+### Where It Is Used
+
+ReLU is the default choice for **hidden layers** in most feedforward and convolutional neural networks. When in doubt about which activation to use in a hidden layer, start with ReLU.
+
+### Problems with ReLU
+
+**Dying ReLU.** If a neuron's weights get pushed into a state where $z$ is always negative for every training example, the neuron will always output 0. Its gradient is also 0, so it never receives a useful update and never recovers. The neuron is effectively dead for the rest of training. This can happen with high learning rates or poorly initialised weights.
+
+**Not zero-centred.** Like sigmoid, ReLU outputs are always non-negative, which can cause the same zigzag gradient update issue.
+
+---
+
+## 4. Leaky ReLU
 
 $$
 g(z) = \max(0.01z, z)
 $$
 
-A fix for dying ReLU. Instead of outputting exactly zero for negative $z$, it outputs a small negative value, keeping the gradient alive.
+Output range: negative infinity to positive infinity (but with a very small slope for negative inputs)
 
-### Softmax
+Leaky ReLU is a direct fix for the dying ReLU problem. Instead of outputting exactly zero for negative $z$, it outputs a small negative value proportional to $z$ — typically $0.01z$. This small slope keeps the gradient alive even for negative inputs, so the neuron can still receive updates and potentially recover.
 
-Used in the output layer for multi-class classification. Takes a vector of raw scores and converts them into probabilities that sum to 1.
+### Where It Is Used
+
+Leaky ReLU is used in **hidden layers** as a drop-in replacement for ReLU, especially in situations where dying neurons are observed or suspected.
+
+### Parametric ReLU (PReLU)
+
+A variation where the slope for negative values is not fixed at 0.01 but is learned during training. This gives the network one more learnable parameter per neuron, allowing it to determine the optimal slope for negative inputs automatically.
 
 $$
-\text{softmax}(z_k) = \frac{e^{z_k}}{\sum_{j} e^{z_j}}
+g(z) = \max(\alpha z, z)
 $$
 
-If the model is classifying images into cat, dog, and bird, softmax might output [0.70, 0.25, 0.05] — 70% cat, 25% dog, 5% bird. The predicted class is the one with the highest probability.
-
-### Which Activation to Use
-
-| Location | Recommended Activation |
-|----------|------------------------|
-| Hidden layers (most cases) | ReLU |
-| Hidden layers (some cases) | Leaky ReLU, Tanh |
-| Output — binary classification | Sigmoid |
-| Output — multi-class classification | Softmax |
-| Output — regression | None (linear) |
+Where $\alpha$ is learned, not set manually.
 
 ---
+
+## 5. ELU (Exponential Linear Unit)
+
+$$
+g(z) =
+\begin{cases}
+z & \text{if } z > 0 \\
+\alpha(e^z - 1) & \text{if } z \leq 0
+\end{cases}
+$$
+
+Output range: $-\alpha$ to positive infinity (typically $\alpha = 1$)
+
+ELU is similar to Leaky ReLU but uses a smooth exponential curve for negative inputs instead of a straight line. This smooth transition through zero has two advantages over ReLU: it reduces the dying neuron problem and it pushes the mean activation closer to zero, which speeds up learning.
+
+### Where It Is Used
+
+ELU is used in **hidden layers** when you want the benefits of ReLU but with smoother negative-side behaviour. It is more computationally expensive than ReLU (because of the exponential) but can produce better results on some tasks.
+
+---
+
+## 6. Swish
+
+$$
+g(z) = z \cdot \sigma(z) = \frac{z}{1 + e^{-z}}
+$$
+
+Output range: roughly -0.28 to positive infinity
+Swish was proposed by Google in 2017. It is the product of the input and its own sigmoid value. Unlike ReLU which has a hard zero cutoff, Swish has a smooth, slightly non-monotonic shape — it dips just below zero for small negative inputs before approaching zero from below as $z$ becomes more negative.
+
+In practice, Swish has been shown to outperform ReLU on some deep networks, particularly very deep ones. The intuition is that the smooth non-monotonic shape provides a richer gradient signal than the hard cutoff of ReLU.
+
+### Where It Is Used
+
+Swish is used in **hidden layers** of very deep networks, notably in EfficientNet and some Transformer-based architectures. It is not yet as universally adopted as ReLU but is worth knowing.
+
+---
+
+## 7. GELU (Gaussian Error Linear Unit)
+
+$$
+g(z) = z \cdot \Phi(z)
+$$
+
+Where $\Phi(z)$ is the cumulative distribution function of the standard normal distribution. In practice it is approximated as:
+
+$$
+g(z) \approx 0.5z\left(1 + \tanh\left[\sqrt{\frac{2}{\pi}}\left(z + 0.044715z^3\right)\right]\right)
+$$
+
+Output range: roughly -0.17 to positive infinity
+
+GELU is similar in shape to Swish — smooth, slightly non-monotonic, and allowing small negative outputs. The key difference is that GELU weights the input by the probability of it being positive under a Gaussian distribution, which gives it a principled probabilistic interpretation.
+
+### Where It Is Used
+
+GELU is the activation function used in **Transformer architectures** including BERT, GPT, and most modern large language models. It has become the standard in natural language processing (NLP) and is increasingly used in vision transformers as well.
+
+---
+
+## 8. Softmax
+
+$$
+\text{softmax}(z_k) = \frac{e^{z_k}}{\sum_{j=1}^{K} e^{z_j}}
+$$
+
+Output range: 0 to 1 for each output, and all outputs sum to exactly 1.
+
+Softmax is different from all the others. It does not operate on a single neuron in isolation. It operates on the **entire output layer at once**, converting a vector of raw scores into a probability distribution.
+
+### How It Works
+
+Say you are classifying an image into one of three classes: cat, dog, or bird. The output layer has 3 neurons with raw scores:
+
+$$
+z = [2.5, \; 1.0, \; 0.1]
+$$
+
+Softmax converts these into probabilities:
+
+$$
+\text{softmax}([2.5, 1.0, 0.1]) = \left[\frac{e^{2.5}}{e^{2.5}+e^{1.0}+e^{0.1}}, \; \frac{e^{1.0}}{e^{2.5}+e^{1.0}+e^{0.1}}, \; \frac{e^{0.1}}{e^{2.5}+e^{1.0}+e^{0.1}}\right]
+$$
+
+$$
+\approx [0.70, \; 0.21, \; 0.09]
+$$
+
+The model predicts 70% cat, 21% dog, 9% bird. The predicted class is cat. All probabilities sum to 1.
+
+### Where It Is Used
+
+Softmax is exclusively used in the **output layer for multi-class classification** problems where the classes are mutually exclusive (each input belongs to exactly one class).
+
+---
+
+## 9. Linear (No Activation)
+
+$$
+g(z) = z
+$$
+
+This is just the identity function — the output equals the input, no transformation applied.
+
+### Where It Is Used
+
+The linear activation (or no activation at all) is used in the **output layer for regression tasks**, where the network needs to predict any real number without range restriction. Predicting house prices, temperature, or stock returns all require unconstrained output values.
+
+---
+
+## Choosing the Right Activation Function
+
+| Location | Task | Recommended Activation |
+|----------|------|------------------------|
+| Hidden layers | Most feedforward networks | ReLU |
+| Hidden layers | When dying ReLU is a problem | Leaky ReLU or ELU |
+| Hidden layers | Very deep networks | Swish or GELU |
+| Hidden layers | RNNs and some special cases | Tanh |
+| Hidden layers | Transformer models (NLP) | GELU |
+| Output layer | Binary classification | Sigmoid |
+| Output layer | Multi-class classification | Softmax |
+| Output layer | Regression | Linear (none) |
+
+---
+
+## Side by Side Comparison
+
+| Activation | Output Range | Zero-Centred | Vanishing Gradient | Dying Neurons | Main Use |
+|------------|-------------|--------------|-------------------|--------------|----------|
+| Sigmoid | 0 to 1 | No | Yes | No | Output: binary classification |
+| Tanh | -1 to 1 | Yes | Yes (less severe) | No | Hidden: RNNs |
+| ReLU | 0 to inf | No | No (positive side) | Yes | Hidden: default choice |
+| Leaky ReLU | -inf to inf | No | No | No | Hidden: ReLU fix |
+| ELU | -α to inf | Approximately | No | No | Hidden: smooth alternative |
+| Swish | ~-0.28 to inf | No | No | No | Hidden: deep networks |
+| GELU | ~-0.17 to inf | No | No | No | Hidden: Transformers |
+| Softmax | 0 to 1 (sum = 1) | No | No | No | Output: multi-class |
+| Linear | -inf to inf | Yes | No | No | Output: regression |
+
+
+| Concept | What It Means |
+|---------|--------------|
+| Activation function | Non-linear transformation applied after the weighted sum in a neuron |
+| Non-linearity | What makes deep networks capable of learning complex patterns |
+| Vanishing gradient | Gradients shrinking to near zero as they flow back through deep layers |
+| Dying ReLU | Neurons permanently stuck at zero output, receiving no gradient updates |
+| Zero-centred | Output values balanced around zero, helping gradient flow stay symmetric |
+| Softmax | Converts raw output scores into a probability distribution summing to 1 |
+| Sigmoid | Squashes output to 0 to 1, used for binary probability output |
+| ReLU | Default hidden layer activation, fast and effective for most tasks |
+| GELU | Smooth probabilistic activation, standard in Transformer models |
 
 ## How a Neural Network Works - Forward Propagation
 
 Forward propagation is the process of computing a prediction by passing the input through every layer one at a time from left to right.
+Forward propagation is simply:
 
+Taking the input, passing it through every layer of the neural network, and producing the final prediction.
+
+Nothing is learned here. No weights are updated. No gradient descent happens.
+
+It is only:
+```
+Input
+   ↓
+Multiply by weights
+   ↓
+Add bias
+   ↓
+Activation Function
+   ↓
+Repeat for every layer
+   ↓
+Prediction
+```
 ### Notation
 
 For a network with multiple layers, use superscripts in square brackets to denote the layer:
@@ -207,17 +421,21 @@ For a network with multiple layers, use superscripts in square brackets to denot
 For a 3-layer network (2 hidden layers, 1 output layer):
 
 **Layer 1:**
+
 $$
 Z^{[1]} = W^{[1]} X + b^{[1]}
 $$
+
 $$
 A^{[1]} = g^{[1]}(Z^{[1]})
 $$
 
 **Layer 2:**
+
 $$
 Z^{[2]} = W^{[2]} A^{[1]} + b^{[2]}
 $$
+
 $$
 A^{[2]} = g^{[2]}(Z^{[2]})
 $$
@@ -226,6 +444,7 @@ $$
 $$
 Z^{[3]} = W^{[3]} A^{[2]} + b^{[3]}
 $$
+
 $$
 \hat{Y} = g^{[3]}(Z^{[3]})
 $$
