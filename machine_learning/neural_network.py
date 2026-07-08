@@ -9,7 +9,6 @@ weights = np.array([
     [0.8, 0.4],   # Neuron 2
     [0.3, 0.9]    # Neuron 3
 ])
-
 # One bias for each neuron
 bias = np.array([0.1, 0.2, 0.3])
 
