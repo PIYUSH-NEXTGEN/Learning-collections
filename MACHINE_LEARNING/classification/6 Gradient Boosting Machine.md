@@ -1,20 +1,20 @@
 # Gradient Boosting Machine (GBM) 
 
-Gradient Boosting is an ensemble learning technique that builds a strong predictive model by combining many weak models — typically shallow decision trees — one at a time, where each new model is specifically trained to fix the mistakes of everything built before it.
+Gradient Boosting is an ensemble learning technique that builds a strong predictive model by combining many weak models  typically shallow decision trees  one at a time, where each new model is specifically trained to fix the mistakes of everything built before it.
 
-Unlike Random Forest, which builds all trees independently in parallel and averages their votes, Gradient Boosting builds trees **sequentially**. Each tree learns from the errors of the previous ensemble. The models are not independent — each one is a direct response to where the current model is going wrong.
+Unlike Random Forest, which builds all trees independently in parallel and averages their votes, Gradient Boosting builds trees **sequentially**. Each tree learns from the errors of the previous ensemble. The models are not independent each one is a direct response to where the current model is going wrong.
 
 The word "boosting" refers to this idea of sequentially improving a weak learner into a strong one. The word "gradient" refers to how errors are defined and minimised — using the same gradient descent logic you already know from linear regression, but applied to the space of models rather than the space of parameters.
 
 ---
 
-## The Core Idea — Learning from Mistakes
+## The Core Idea - Learning from Mistakes
 
 The best way to understand Gradient Boosting is through a simple analogy.
 
 Imagine you are a student taking practice tests. After your first attempt, you check your answers. Instead of reviewing everything, you focus only on the questions you got wrong. Your second attempt targets those weak spots. Then you check again and focus on whatever remains wrong. You keep iterating, each round specifically addressing your current weaknesses.
 
-Gradient Boosting works exactly this way. Each tree studies the residual errors — the gap between what the current model predicts and what the actual answer is — and tries to predict those errors. The corrected predictions are then passed to the next tree, which again studies whatever errors remain.
+Gradient Boosting works exactly this way. Each tree studies the residual errors  the gap between what the current model predicts and what the actual answer is and tries to predict those errors. The corrected predictions are then passed to the next tree, which again studies whatever errors remain.
 
 ```
 Actual price of house: ₹80L
@@ -54,7 +54,7 @@ $$
 
 **Step 3 — Train a shallow tree on the residuals.**
 
-A new decision tree is fitted to predict these residuals, not the original target values. The tree is intentionally kept shallow — typically depth 3 to 5 — to prevent overfitting.
+A new decision tree is fitted to predict these residuals, not the original target values. The tree is intentionally kept shallow  typically depth 3 to 5 to prevent overfitting.
 
 **Step 4 — Add the tree to the ensemble with a learning rate.**
 
@@ -116,7 +116,7 @@ $$
 -\frac{\partial L}{\partial F(x)} = y - F(x) = \text{residual}
 $$
 
-The residual is the negative gradient. So when you train a tree on residuals, you are essentially doing gradient descent — but in function space rather than parameter space. This generalisation is what makes boosting work with any differentiable loss function, not just MSE.
+The residual is the negative gradient. So when you train a tree on residuals, you are essentially doing gradient descent  but in function space rather than parameter space. This generalisation is what makes boosting work with any differentiable loss function, not just MSE.
 
 For a different loss function, you just compute a different gradient. The rest of the algorithm stays exactly the same.
 
@@ -146,9 +146,9 @@ In practice, it is common to set a small learning rate (0.01 to 0.1) and let ear
 
 ---
 
-## Shallow Trees — Why Weak Learners Work
+## Shallow Trees  Why Weak Learners Work
 
-Each individual tree in gradient boosting is deliberately kept shallow — depth 3 to 5 is typical. A depth-3 tree can ask at most 3 questions, which means it captures only simple patterns.
+Each individual tree in gradient boosting is deliberately kept shallow  depth 3 to 5 is typical. A depth-3 tree can ask at most 3 questions, which means it captures only simple patterns.
 
 This seems counterintuitive. Why use weak models intentionally?
 
